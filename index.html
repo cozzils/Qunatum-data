@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Data — Mercato B2B Software & App Italia 2024</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   RESET & TOKENS
+═══════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  /* palette */
+  --bg:       #080A0F;
+  --bg1:      #0C0E15;
+  --bg2:      #10131C;
+  --card:     #131720;
+  --card2:    #191D28;
+  --card3:    #1F2333;
+
+  /* text */
+  --t0:  #ECEEF5;
+  --t1:  #9BA3B8;
+  --t2:  #5A6278;
+
+  /* accent */
+  --blue:   #5B9CF6;
+  --cyan:   #22D4EF;
+  --violet: #A78BFA;
+  --amber:  #F8B347;
+  --green:  #34D399;
+  --rose:   #F87171;
+  --indigo: #818CF8;
+
+  /* border */
+  --b0: rgba(255,255,255,.08);
+  --b1: rgba(255,255,255,.04);
+
+  /* radius */
+  --r:  14px;
+  --r2: 8px;
+
+  /* shadow */
+  --sh:  0 1px 1px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.055);
+  --shh: 0 2px 24px rgba(0,0,0,.6), 0 0 0 1px rgba(91,156,246,.2);
+}
+
+html { font-size:16px; scroll-behavior:smooth }
+body {
+  background: var(--bg);
+  color: var(--t0);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════
+   AMBIENT LIGHT BLOBS
+═══════════════════════════════════════════════ */
+.ambient {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+}
+.amb-a {
+  position: absolute; width: 800px; height: 800px; border-radius: 50%;
+  top: -300px; right: -200px;
+  background: radial-gradient(circle, rgba(91,156,246,.09) 0%, transparent 65%);
+}
+.amb-b {
+  position: absolute; width: 600px; height: 600px; border-radius: 50%;
+  bottom: 10%; left: -150px;
+  background: radial-gradient(circle, rgba(167,139,250,.07) 0%, transparent 65%);
+}
+.amb-c {
+  position: absolute; width: 400px; height: 400px; border-radius: 50%;
+  top: 40%; left: 50%;
+  background: radial-gradient(circle, rgba(34,212,239,.04) 0%, transparent 65%);
+}
+
+/* ═══════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════ */
+header {
+  position: relative;
+  z-index: 2;
+  padding: clamp(40px,6vw,72px) clamp(24px,6vw,80px) clamp(36px,4vw,60px);
+  border-bottom: 1px solid var(--b0);
+  background: linear-gradient(180deg, rgba(12,14,21,.95) 0%, rgba(8,10,15,.7) 100%);
+  backdrop-filter: blur(2px);
+}
+
+.h-topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-mark {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  box-shadow: 0 0 20px rgba(91,156,246,.3);
+}
+
+.logo-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--t0);
+}
+
+.logo-name span { color: var(--blue); }
+
+.h-sep { width: 1px; height: 20px; background: var(--b0); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.pill-blue {
+  background: rgba(91,156,246,.12);
+  border: 1px solid rgba(91,156,246,.22);
+  color: var(--blue);
+}
+
+.pill-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .4; transform: scale(.8); }
+}
+
+.h-label {
+  font-size: 11px;
+  color: var(--t2);
+  letter-spacing: .06em;
+  font-weight: 500;
+}
+
+.h-display {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(30px, 5.5vw, 62px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -.03em;
+  margin-bottom: 16px;
+}
+
+.h-display .g1 {
+  background: linear-gradient(130deg, var(--blue) 0%, var(--cyan) 60%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.h-display .g2c {
+  background: linear-gradient(130deg, var(--violet) 0%, var(--indigo) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.h-sub {
+  font-size: 15px;
+  color: var(--t1);
+  max-width: 640px;
+  line-height: 1.7;
+  margin-bottom: 44px;
+}
+
+.h-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--b0);
+  border: 1px solid var(--b0);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.hk {
+  background: var(--card);
+  padding: 22px 20px;
+  transition: background .2s;
+}
+
+.hk:hover { background: var(--card2); }
+
+.hk-val {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 7px;
+  background: linear-gradient(130deg, var(--blue), var(--cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hk-lbl { font-size: 11.5px; color: var(--t1); font-weight: 500; line-height: 1.35; }
+
+/* ═══════════════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════════════ */
+main {
+  position: relative; z-index: 2;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: clamp(28px,4vw,52px) clamp(20px,5vw,80px);
+}
+
+/* ═══════════════════════════════════════════════
+   TABS
+═══════════════════════════════════════════════ */
+.tab-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(8,10,15,.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--b0);
+  margin: 0 -80px 36px;
+  padding: 0 80px;
+}
+
+.tab-nav {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tab-nav::-webkit-scrollbar { display: none; }
+
+.tbtn {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 14px 22px;
+  background: transparent;
+  color: var(--t2);
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+  letter-spacing: .01em;
+}
+
+.tbtn:hover { color: var(--t1); }
+
+.tbtn.active {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+  font-weight: 600;
+}
+
+.tp { display: none; }
+.tp.active { display: block; }
+
+/* ═══════════════════════════════════════════════
+   SECTION HEADS
+═══════════════════════════════════════════════ */
+.sec-header { margin-bottom: 28px; }
+
+.sec-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 10px;
+}
+
+.sec-eyebrow::before {
+  content: '';
+  display: block; width: 18px; height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  border-radius: 2px;
+}
+
+.sec-title {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--t0);
+  margin-bottom: 10px;
+  line-height: 1.15;
+}
+
+.sec-desc {
+  font-size: 14px;
+  color: var(--t1);
+  line-height: 1.7;
+  max-width: 880px;
+}
+
+/* ═══════════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════════ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--b0);
+  border-radius: var(--r);
+  padding: 28px 30px;
+  margin-bottom: 20px;
+  box-shadow: var(--sh);
+  transition: border-color .2s;
+}
+
+.card:hover { border-color: rgba(91,156,246,.15); }
+
+.card-head { margin-bottom: 20px; }
+.card-title { font-size: 13.5px; font-weight: 600; color: var(--t0); margin-bottom: 4px; }
+.card-note  { font-size: 11.5px; color: var(--t2); line-height: 1.55; }
+
+/* ═══════════════════════════════════════════════
+   KPI STRIP (inner tabs)
+═══════════════════════════════════════════════ */
+.kstrip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.kc {
+  background: var(--card);
+  border: 1px solid var(--b0);
+  border-radius: var(--r);
+  padding: 20px;
+  box-shadow: var(--sh);
+  position: relative;
+  overflow: hidden;
+  transition: all .22s;
+  cursor: default;
+}
+
+.kc:hover { transform: translateY(-3px); box-shadow: var(--shh); }
+
+.kc-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+  border-radius: var(--r);
+}
+
+.kc:hover .kc-glow { opacity: 1; }
+
+.kc.bl .kc-glow { background: radial-gradient(ellipse at top right, rgba(91,156,246,.08), transparent 60%); }
+.kc.am .kc-glow { background: radial-gradient(ellipse at top right, rgba(248,179,71,.08), transparent 60%); }
+.kc.cy .kc-glow { background: radial-gradient(ellipse at top right, rgba(34,212,239,.07), transparent 60%); }
+.kc.vi .kc-glow { background: radial-gradient(ellipse at top right, rgba(167,139,250,.08), transparent 60%); }
+.kc.gr .kc-glow { background: radial-gradient(ellipse at top right, rgba(52,211,153,.07), transparent 60%); }
+.kc.ro .kc-glow { background: radial-gradient(ellipse at top right, rgba(248,113,113,.07), transparent 60%); }
+
+.kc-ico { font-size: 20px; margin-bottom: 12px; display: block; }
+
+.kc-n {
+  font-family: 'Sora', sans-serif;
+  font-size: 26px; font-weight: 700;
+  line-height: 1; margin-bottom: 7px;
+}
+
+.kc.bl .kc-n { color: var(--blue); }
+.kc.am .kc-n { color: var(--amber); }
+.kc.cy .kc-n { color: var(--cyan); }
+.kc.vi .kc-n { color: var(--violet); }
+.kc.gr .kc-n { color: var(--green); }
+.kc.ro .kc-n { color: var(--rose); }
+
+.kc-ttl { font-size: 12px; font-weight: 600; color: var(--t0); margin-bottom: 4px; }
+.kc-desc { font-size: 11px; color: var(--t2); line-height: 1.5; }
+
+/* ═══════════════════════════════════════════════
+   GRID HELPERS
+═══════════════════════════════════════════════ */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
+.g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
+.cw { position: relative; width: 100%; }
+
+/* ═══════════════════════════════════════════════
+   TABLE
+═══════════════════════════════════════════════ */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+.tbl thead th {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--t2); padding: 10px 12px;
+  text-align: left;
+  background: var(--card2);
+  border-bottom: 1px solid var(--b0);
+}
+
+.tbl tbody td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--b1);
+  vertical-align: middle;
+}
+
+.tbl tbody tr:last-child td { border-bottom: none; }
+.tbl tbody tr:hover td { background: rgba(91,156,246,.04); }
+
+.rn {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--t2);
+}
+
+.pname { font-weight: 600; font-size: 13px; color: var(--t0); }
+
+.badge {
+  display: inline-flex; align-items: center;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 4px; margin-left: 7px;
+}
+
+.btop { background: rgba(91,156,246,.12); color: var(--blue); border: 1px solid rgba(91,156,246,.2); }
+.bhot { background: rgba(248,113,113,.10); color: var(--rose); border: 1px solid rgba(248,113,113,.18); }
+.bnew { background: rgba(52,211,153,.10); color: var(--green); border: 1px solid rgba(52,211,153,.18); }
+
+.bt  { background: var(--card3); border-radius: 3px; height: 5px; overflow: hidden; min-width: 90px; }
+.bf  { height: 100%; border-radius: 3px; }
+.pv  { font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700; text-align: right; }
+.trup  { font-size: 11px; font-weight: 600; color: var(--green); }
+.trfl  { font-size: 11px; color: var(--t2); }
+
+/* ═══════════════════════════════════════════════
+   SECTOR CARDS
+═══════════════════════════════════════════════ */
+.sc {
+  background: var(--card);
+  border: 1px solid var(--b0);
+  border-radius: var(--r);
+  padding: 22px;
+  box-shadow: var(--sh);
+  transition: all .22s;
+  position: relative; overflow: hidden;
+}
+
+.sc:hover { transform: translateY(-3px); box-shadow: var(--shh); border-color: rgba(91,156,246,.2); }
+
+.sc-shine {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.07) 50%, transparent 100%);
+}
+
+.sc-ico { font-size: 22px; margin-bottom: 10px; display: block; }
+.sc-rank {
+  display: inline-flex; align-items: center;
+  font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 4px; margin-bottom: 10px;
+}
+
+.sc-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 17px; font-weight: 700;
+  line-height: 1.2; margin-bottom: 5px;
+}
+
+.sc-val {
+  font-family: 'Sora', sans-serif;
+  font-size: 28px; font-weight: 700;
+  line-height: 1; margin-bottom: 4px;
+}
+
+.sc-sub { font-size: 11.5px; color: var(--cyan); font-weight: 500; margin-bottom: 10px; }
+.sc-desc { font-size: 12px; color: var(--t2); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════════
+   SIZE CARDS
+═══════════════════════════════════════════════ */
+.szc {
+  background: var(--card);
+  border: 1px solid var(--b0);
+  border-radius: var(--r);
+  padding: 22px;
+  box-shadow: var(--sh);
+  transition: all .22s;
+}
+
+.szc:hover { transform: translateY(-2px); box-shadow: var(--shh); }
+
+.szc-lbl { font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--t2); margin-bottom: 8px; }
+.szc-name { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 5px; }
+.szc-budget { font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+.szc-list { font-size: 11.5px; color: var(--t1); line-height: 1.75; }
+.szc-note { font-size: 10.5px; color: var(--t2); margin-top: 8px; font-style: italic; line-height: 1.5; }
+.szc-bar { background: var(--card3); border-radius: 2px; height: 4px; margin-top: 14px; overflow: hidden; }
+.szc-fill { height: 100%; border-radius: 2px; }
+
+/* ═══════════════════════════════════════════════
+   GEO CARDS
+═══════════════════════════════════════════════ */
+.gc {
+  background: var(--card);
+  border: 1px solid var(--b0);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  box-shadow: var(--sh);
+  transition: all .22s;
+}
+
+.gc:hover { transform: translateY(-2px); box-shadow: var(--shh); }
+.gc.p1 { border-color: rgba(91,156,246,.25); background: linear-gradient(145deg, rgba(91,156,246,.05), var(--card)); }
+
+.gc-rank { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--t2); margin-bottom: 5px; }
+.gc-name { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.gc.p1 .gc-name { color: var(--blue); }
+.gc-val { font-size: 11.5px; color: var(--cyan); font-weight: 500; margin-bottom: 10px; line-height: 1.4; }
+.gc-bar { background: var(--card3); border-radius: 3px; height: 4px; overflow: hidden; }
+.gc-fill { height: 100%; border-radius: 3px; }
+
+/* ═══════════════════════════════════════════════
+   INSIGHT CARDS
+═══════════════════════════════════════════════ */
+.ins-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
+
+.ins {
+  background: var(--card);
+  border: 1px solid var(--b0);
+  border-radius: var(--r);
+  padding: 22px;
+  box-shadow: var(--sh);
+  position: relative; overflow: hidden;
+  transition: all .22s;
+}
+
+.ins:hover { transform: translateY(-2px); box-shadow: var(--shh); }
+
+.ins-beam {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  border-radius: var(--r) var(--r) 0 0;
+}
+
+.ins.bl .ins-beam { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+.ins.am .ins-beam { background: linear-gradient(90deg, var(--amber), #f6d365); }
+.ins.cy .ins-beam { background: linear-gradient(90deg, var(--cyan), var(--blue)); }
+.ins.vi .ins-beam { background: linear-gradient(90deg, var(--violet), var(--indigo)); }
+.ins.gr .ins-beam { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+.ins.ro .ins-beam { background: linear-gradient(90deg, var(--rose), var(--amber)); }
+
+.ins-n {
+  font-family: 'Sora', sans-serif;
+  font-size: 38px; font-weight: 700;
+  line-height: 1; margin-bottom: 8px;
+  margin-top: 10px;
+}
+
+.ins.bl .ins-n { color: var(--blue); }
+.ins.am .ins-n { color: var(--amber); }
+.ins.cy .ins-n { color: var(--cyan); }
+.ins.vi .ins-n { color: var(--violet); }
+.ins.gr .ins-n { color: var(--green); }
+.ins.ro .ins-n { color: var(--rose); }
+
+.ins-ttl { font-size: 12.5px; font-weight: 600; color: var(--t0); margin-bottom: 6px; }
+.ins-desc { font-size: 11.5px; color: var(--t2); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 1200px) {
+  .kstrip, .h-kpis { grid-template-columns: repeat(3,1fr); }
+  .g4 { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 900px) {
+  header, main { padding: 28px 20px; }
+  .tab-wrap { margin: 0 -20px 28px; padding: 0 20px; }
+  .kstrip { grid-template-columns: repeat(2,1fr); }
+  .h-kpis { grid-template-columns: repeat(2,1fr); }
+  .g2, .g3 { grid-template-columns: 1fr; }
+  .ins-row { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 580px) {
+  .kstrip, .g3, .g4, .ins-row { grid-template-columns: 1fr; }
+  .tbtn { font-size: 11.5px; padding: 12px 14px; }
+  .h-kpis { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ambient blobs -->
+<div class="ambient">
+  <div class="amb-a"></div>
+  <div class="amb-b"></div>
+  <div class="amb-c"></div>
+</div>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <div class="h-topbar">
+    <div class="logo">
+      <div class="logo-mark">⬡</div>
+      <div class="logo-name">Quantum<span>Data</span></div>
+    </div>
+    <div class="h-sep"></div>
+    <div class="pill pill-blue"><div class="pill-dot"></div>Report di Mercato</div>
+    <div class="h-sep"></div>
+    <span class="h-label">Italia 2024 · B2B Software &amp; App</span>
+  </div>
+
+  <h1 class="h-display">
+    Mercato <span class="g1">Sviluppo Software</span><br>
+    &amp; <span class="g2c">App per Aziende</span> — Italia 2024
+  </h1>
+
+  <p class="h-sub">
+    Chi compra software custom e app in Italia, quanto spende, quali settori investono di più
+    e dove si concentra la domanda B2B in Lombardia.<br>
+    Fonti certificate: Anitec‑Assinform · Politecnico di Milano · ISTAT · NetConsulting cube
+  </p>
+
+  <div class="h-kpis">
+    <div class="hk">
+      <div class="hk-val">€81,6 Mld</div>
+      <div class="hk-lbl">Mercato digitale totale Italia 2024</div>
+    </div>
+    <div class="hk">
+      <div class="hk-val">€9,4 Mld</div>
+      <div class="hk-lbl">Software &amp; Soluzioni ICT (+3,9%)</div>
+    </div>
+    <div class="hk">
+      <div class="hk-val">26.000+</div>
+      <div class="hk-lbl">Aziende software attive in Italia</div>
+    </div>
+    <div class="hk">
+      <div class="hk-val">37,1%</div>
+      <div class="hk-lbl">Software sviluppato in Lombardia</div>
+    </div>
+    <div class="hk">
+      <div class="hk-val">+3,7%</div>
+      <div class="hk-lbl">Crescita digitale vs PIL +0,7%</div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main>
+
+  <!-- STICKY TABS -->
+  <div class="tab-wrap">
+    <nav class="tab-nav">
+      <button class="tbtn active" onclick="showTab('servizi',this)">💻 Servizi Richiesti</button>
+      <button class="tbtn" onclick="showTab('settori',this)">🏢 Settori Acquirenti</button>
+      <button class="tbtn" onclick="showTab('dimensione',this)">📊 Dimensione Aziendale</button>
+      <button class="tbtn" onclick="showTab('geo',this)">🗺️ Lombardia</button>
+      <button class="tbtn" onclick="showTab('trend',this)">🚀 Trend &amp; Tecnologie</button>
+      <button class="tbtn" onclick="showTab('insight',this)">💡 Insight Quantum Data</button>
+    </nav>
+  </div>
+
+  <!-- ══ TAB 1: SERVIZI ══ -->
+  <div id="t-servizi" class="tp active">
+    <div class="sec-header">
+      <div class="sec-eyebrow">01 — Servizi</div>
+      <h2 class="sec-title">Cosa Comprano le Aziende Italiane in Software &amp; App</h2>
+      <p class="sec-desc">Ranking dei servizi di sviluppo software e digitali per quota di acquisto B2B. Fonti: Osservatorio Software Politecnico di Milano 2024 · Anitec-Assinform "Il Digitale in Italia 2024" · Digital4.biz Survey 300 PMI · industryresearch.biz.</p>
+    </div>
+
+    <div class="kstrip">
+      <div class="kc bl"><div class="kc-glow"></div><span class="kc-ico">🏦</span><div class="kc-n">€10,5Mld</div><div class="kc-ttl">Banche — Spesa ICT #1</div><div class="kc-desc">Leader assoluto. TCMA +7,4% fino 2027. Focus su AI, cloud e cybersecurity.</div></div>
+      <div class="kc am"><div class="kc-glow"></div><span class="kc-ico">🏭</span><div class="kc-n">€10,5Mld</div><div class="kc-ttl">Industria — Spesa ICT #2</div><div class="kc-desc">Industria 4.0, IoT, supply chain digitale. TCMA +6,1%. Trainato da T.5.0 PNRR.</div></div>
+      <div class="kc cy"><div class="kc-glow"></div><span class="kc-ico">🏛️</span><div class="kc-n">+11,1%</div><div class="kc-ttl">PA — Crescita più rapida</div><div class="kc-desc">PA Centrale +11,1%, PA Locale +10,2%. PNRR €12,7 Mld destinati al digitale.</div></div>
+      <div class="kc vi"><div class="kc-glow"></div><span class="kc-ico">🏥</span><div class="kc-n">+9,6%</div><div class="kc-ttl">Sanità — TCMA più elevato</div><div class="kc-desc">Settore con la crescita percentuale più alta al 2027. Telemedicina, CCE.</div></div>
+      <div class="kc gr"><div class="kc-glow"></div><span class="kc-ico">🤖</span><div class="kc-n">€909M</div><div class="kc-ttl">AI — Mercato 2024</div><div class="kc-desc">+34,8% nel 2024. Adottato dall'8% delle imprese con 10+ addetti. 1,8Mld nel 2027.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Distribuzione acquisti B2B per tipologia di servizio software — Italia 2024</div>
+        <div class="card-note">Fonte: Osservatorio Software Politecnico di Milano 2024 · Anitec-Assinform "Il Digitale in Italia 2024/2025" · Digital4.biz Survey 300 PMI</div>
+      </div>
+      <div class="cw" style="height:390px"><canvas id="c1"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Ranking dettagliato — quota acquisti B2B, ticket medio per progetto e TCMA</div>
+        <div class="card-note">I gestionali ERP/CRM sono presenti nell'85% delle imprese italiane. Cloud e AI sono i segmenti a crescita più rapida. (Politecnico di Milano / AssoSoftware 2024)</div>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Tipologia di Servizio</th><th>Uso Principale</th><th>Quota</th><th>%</th><th>Ticket Medio</th><th>Trend</th></tr></thead>
+        <tbody id="ptb"></tbody>
+      </table>
+    </div>
+
+    <div class="g2">
+      <div class="card" style="margin-bottom:0">
+        <div class="card-head">
+          <div class="card-title">Macro-categorie della spesa software B2B</div>
+          <div class="card-note">Gestionali (ERP/CRM) dominano. Cloud e AI sono i segmenti a crescita più rapida. (Politecnico di Milano 2024)</div>
+        </div>
+        <div class="cw" style="height:290px"><canvas id="c2"></canvas></div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="card-head">
+          <div class="card-title">Modalità di acquisto — Cloud vs On-premise vs Custom</div>
+          <div class="card-note">Il cloud supera il 52% degli acquisti nel 2024 (+17,2%). On-premise preferito da manifattura, PA e finance. (Anitec-Assinform 2024)</div>
+        </div>
+        <div class="cw" style="height:290px"><canvas id="c3"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 2: SETTORI ══ -->
+  <div id="t-settori" class="tp">
+    <div class="sec-header">
+      <div class="sec-eyebrow">02 — Settori</div>
+      <h2 class="sec-title">Quali Settori Investono di Più in Software &amp; App</h2>
+      <p class="sec-desc">Spesa ICT per settore in milioni € — dati certificati Anitec-Assinform / NetConsulting cube (Rapporto "Il Digitale in Italia 2024"). Banche e Industria guidano con ~€10,5 Mld ciascuno. La PA è il settore a crescita più rapida (+11,1%) grazie al PNRR.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Spesa ICT per settore — Italia 2024 (milioni €)</div>
+        <div class="card-note">Fonte certificata: Anitec-Assinform / NetConsulting cube — "Il Digitale in Italia 2024/2025". Settore bancario €10.510M, Industria €10.468M, Sanità TCMA +9,6%.</div>
+      </div>
+      <div class="cw" style="height:340px"><canvas id="c4"></canvas></div>
+    </div>
+
+    <div class="g3">
+      <div class="sc">
+        <div class="sc-shine"></div>
+        <div class="sc-rank" style="background:rgba(91,156,246,.1);color:var(--blue);border:1px solid rgba(91,156,246,.2)">#1 · Leader Assoluto</div>
+        <div class="sc-ico">🏦</div>
+        <div class="sc-name">Banche &amp; Finance</div>
+        <div class="sc-val" style="color:var(--blue)">€10.510M</div>
+        <div class="sc-sub">TCMA +7,4% · Cybersec €435M 2024</div>
+        <div class="sc-desc">AI per automazione processi, customer experience digitale, open banking, fraud detection. €173,6M in AI. (Anitec 2024)</div>
+      </div>
+      <div class="sc">
+        <div class="sc-shine"></div>
+        <div class="sc-rank" style="background:rgba(248,179,71,.1);color:var(--amber);border:1px solid rgba(248,179,71,.2)">#2 · Industria 4.0</div>
+        <div class="sc-ico">🏭</div>
+        <div class="sc-name">Manifattura &amp; Industria</div>
+        <div class="sc-val" style="color:var(--amber)">€10.468M</div>
+        <div class="sc-sub">TCMA +6,1% · Transizione 5.0 PNRR</div>
+        <div class="sc-desc">Digital twin, MES, IoT industriale, supply chain management, automazione. PNRR Transizione 5.0 (€12,7 Mld). (Anitec 2024)</div>
+      </div>
+      <div class="sc">
+        <div class="sc-shine"></div>
+        <div class="sc-rank" style="background:rgba(34,212,239,.08);color:var(--cyan);border:1px solid rgba(34,212,239,.18)">#3 · PA +11,1%</div>
+        <div class="sc-ico">🏛️</div>
+        <div class="sc-name">Pubblica Amministrazione</div>
+        <div class="sc-val" style="color:var(--cyan)">€6.200M+</div>
+        <div class="sc-sub">PA Centrale +11,1% · PA Locale +10,2%</div>
+        <div class="sc-desc">Digitalizzazione servizi, SPID, APP IO, migrazione cloud PSN. 91% interventi PNRR attivati. (Anitec / PNRR 2024)</div>
+      </div>
+      <div class="sc">
+        <div class="sc-shine"></div>
+        <div class="sc-rank" style="background:rgba(167,139,250,.1);color:var(--violet);border:1px solid rgba(167,139,250,.2)">#4 · TLC &amp; Media</div>
+        <div class="sc-ico">📡</div>
+        <div class="sc-name">Telecom &amp; Media</div>
+        <div class="sc-val" style="color:var(--violet)">€9.100M</div>
+        <div class="sc-sub">5G, OTT, streaming, piattaforme digitali</div>
+        <div class="sc-desc">Infrastruttura 5G, OSS/BSS, piattaforme streaming. Unico settore in lieve contrazione (-1,1%). (Anitec 2024)</div>
+      </div>
+      <div class="sc">
+        <div class="sc-shine"></div>
+        <div class="sc-rank" style="background:rgba(52,211,153,.08);color:var(--green);border:1px solid rgba(52,211,153,.18)">#5 · TCMA +9,6%</div>
+        <div class="sc-ico">🏥</div>
+        <div class="sc-name">Sanità &amp; Healthcare</div>
+        <div class="sc-val" style="color:var(--green)">€2.300M+</div>
+        <div class="sc-sub">TCMA +9,6% — crescita più rapida</div>
+        <div class="sc-desc">CCE, telemedicina, sanità digitale. AI spesa PA sanitaria +45,5% nel 2024. PNRR Missione 6 al 95%. (Anitec 2024)</div>
+      </div>
+      <div class="sc">
+        <div class="sc-shine"></div>
+        <div class="sc-rank" style="background:rgba(248,113,113,.08);color:var(--rose);border:1px solid rgba(248,113,113,.18)">#6 · Energy</div>
+        <div class="sc-ico">⚡</div>
+        <div class="sc-name">Energy &amp; Utilities</div>
+        <div class="sc-val" style="color:var(--rose)">€2.363M</div>
+        <div class="sc-sub">TCMA +6% · Smart grid, ESG reporting</div>
+        <div class="sc-desc">Smart grid, monitoraggio consumi, ESG reporting software, energy management. +4,5% nel 2023. (Anitec Executive Summary 2024)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">TCMA per settore 2024–2027 — tasso di crescita annuo investimenti digitali</div>
+        <div class="card-note">Fonte: Anitec-Assinform / NetConsulting cube, "Il Digitale in Italia 2025". Banche, PA e Sanità guideranno la crescita al 2027.</div>
+      </div>
+      <div class="cw" style="height:300px"><canvas id="c5"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 3: DIMENSIONE ══ -->
+  <div id="t-dimensione" class="tp">
+    <div class="sec-header">
+      <div class="sec-eyebrow">03 — Dimensione</div>
+      <h2 class="sec-title">Comportamento d'Acquisto per Dimensione Aziendale</h2>
+      <p class="sec-desc">Fonte: Anitec-Assinform "Il Digitale in Italia 2024" + Osservatorio Software Politecnico di Milano 2024 + Digital4.biz Survey 300 PMI. Le grandi imprese (250+ add.) generano il 62% della spesa digitale, ma le PMI rappresentano il segmento con crescita più sostenuta.</p>
+    </div>
+
+    <div class="g4">
+      <div class="szc">
+        <div class="szc-lbl">Microimpresa · 0–9 addetti</div>
+        <div class="szc-name" style="color:var(--t1)">Micro</div>
+        <div class="szc-budget" style="color:var(--t1)">Budget ICT: €2.000–15.000/anno</div>
+        <div class="szc-list">📌 Software gestionale SaaS<br>📌 App prenotazioni semplice<br>📌 Sito web + e-commerce<br>📌 CRM cloud (HubSpot, Zoho)<br>📌 Fatturazione elettronica</div>
+        <div class="szc-note">Preferisce SaaS già pronti, no custom. Principale freno: costo (61%). Acquisto 1–3×/anno. (ISTAT 2024)</div>
+        <div class="szc-bar"><div class="szc-fill" style="width:25%;background:var(--t2)"></div></div>
+      </div>
+      <div class="szc" style="border-color:rgba(91,156,246,.2)">
+        <div class="szc-lbl">Piccola impresa · 10–49 addetti</div>
+        <div class="szc-name" style="color:var(--blue)">Piccola</div>
+        <div class="szc-budget" style="color:var(--blue)">Budget ICT: €15.000–80.000/anno</div>
+        <div class="szc-list">📌 ERP cloud (TeamSystem, Zucchetti)<br>📌 App gestionale custom (moduli)<br>📌 Sito web custom + SEO<br>📌 Software settoriale verticale<br>📌 Cybersecurity base</div>
+        <div class="szc-note">Aperta a sviluppo custom per processi chiave. Accede a voucher digitali Camera di Commercio.</div>
+        <div class="szc-bar"><div class="szc-fill" style="width:50%;background:var(--blue)"></div></div>
+      </div>
+      <div class="szc" style="border-color:rgba(248,179,71,.2)">
+        <div class="szc-lbl">Media impresa · 50–249 addetti</div>
+        <div class="szc-name" style="color:var(--amber)">Media</div>
+        <div class="szc-budget" style="color:var(--amber)">Budget ICT: €80.000–500.000/anno</div>
+        <div class="szc-list">📌 ERP full custom o estensioni SAP<br>📌 App mobile per field force<br>📌 Data analytics / BI dashboard<br>📌 Integrazione sistemi legacy<br>📌 Cybersecurity avanzata</div>
+        <div class="szc-note">Acquisto mensile/trimestrale. Responsabile IT dedicato. Sviluppo custom per differenziazione.</div>
+        <div class="szc-bar"><div class="szc-fill" style="width:75%;background:var(--amber)"></div></div>
+      </div>
+      <div class="szc" style="border-color:rgba(248,113,113,.2)">
+        <div class="szc-lbl">Grande impresa · 250+ addetti</div>
+        <div class="szc-name" style="color:var(--rose)">Grande</div>
+        <div class="szc-budget" style="color:var(--rose)">Budget ICT: €500K–5M+/anno</div>
+        <div class="szc-list">📌 Piattaforme enterprise full-stack<br>📌 App aziendali su misura<br>📌 AI integration &amp; data science<br>📌 Digital transformation completa<br>📌 Managed services IT</div>
+        <div class="szc-note">Contratti pluriennali. Gare d'appalto. Framework agreement con fornitore strategico.</div>
+        <div class="szc-bar"><div class="szc-fill" style="width:100%;background:var(--rose)"></div></div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card" style="margin-bottom:0">
+        <div class="card-head">
+          <div class="card-title">Distribuzione della spesa digitale per dimensione aziendale</div>
+          <div class="card-note">Grandi imprese = 62% della spesa pur essendo lo 0,1% delle aziende italiane. (Anitec-Assinform 2024)</div>
+        </div>
+        <div class="cw" style="height:290px"><canvas id="c6"></canvas></div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="card-head">
+          <div class="card-title">Priorità di spesa ICT nelle PMI italiane — Survey 300 PMI</div>
+          <div class="card-note">La cybersecurity è la priorità assoluta per il 61% delle PMI. Fonte: NetworkDigital360 + Wind Tre Business 2024.</div>
+        </div>
+        <div class="cw" style="height:290px"><canvas id="c7"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 4: LOMBARDIA ══ -->
+  <div id="t-geo" class="tp">
+    <div class="sec-header">
+      <div class="sec-eyebrow">04 — Territorio</div>
+      <h2 class="sec-title">Distribuzione Geografica — Lombardia</h2>
+      <p class="sec-desc">La Lombardia è il polo assoluto del software italiano: 37,1% del software sviluppato in Lombardia (StartupItalia / Politecnico di Milano 2024), 41,7% del fatturato nazionale di settore (€1.451M) e 35% degli addetti. Milano, Brescia e Bergamo concentrano oltre il 60% della domanda B2B regionale.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Quota software sviluppato per regione — % del totale nazionale</div>
+        <div class="card-note">Fonte: StartupItalia / Osservatorio Software Politecnico di Milano 2024. La Lombardia concentra il 37,1% del software italiano.</div>
+      </div>
+      <div class="cw" style="height:300px"><canvas id="c8"></canvas></div>
+    </div>
+
+    <div class="g3">
+      <div class="gc p1">
+        <div class="gc-rank">#1 Italia · Hub Tech Nazionale</div>
+        <div class="gc-name">Milano + Lombardia</div>
+        <div class="gc-val">37,1% software IT · €1.451M fatturato<br>8.091 addetti ICT · 310.000+ PMI</div>
+        <div class="gc-bar"><div class="gc-fill" style="width:100%;background:var(--blue)"></div></div>
+      </div>
+      <div class="gc">
+        <div class="gc-rank">#2 Italia · Automotive &amp; Fintech</div>
+        <div class="gc-name">Piemonte</div>
+        <div class="gc-val">11,1% software IT<br>Torino hub AI e automotive digital</div>
+        <div class="gc-bar"><div class="gc-fill" style="width:30%;background:var(--cyan)"></div></div>
+      </div>
+      <div class="gc">
+        <div class="gc-rank">#3 Italia · Manifattura &amp; Logistica</div>
+        <div class="gc-name">Emilia-Romagna</div>
+        <div class="gc-val">9,3% software IT<br>Bologna hub manifattura digitale</div>
+        <div class="gc-bar"><div class="gc-fill" style="width:25%;background:var(--violet)"></div></div>
+      </div>
+      <div class="gc">
+        <div class="gc-rank">#4 Italia · PMI produttive</div>
+        <div class="gc-name">Veneto</div>
+        <div class="gc-val">8,9% software IT<br>Padova e Treviso hub tech</div>
+        <div class="gc-bar"><div class="gc-fill" style="width:24%;background:var(--amber)"></div></div>
+      </div>
+      <div class="gc">
+        <div class="gc-rank">#5 Italia · Design &amp; Moda</div>
+        <div class="gc-name">Toscana</div>
+        <div class="gc-val">7,4% software IT<br>Firenze fintech e fashion tech</div>
+        <div class="gc-bar"><div class="gc-fill" style="width:20%;background:var(--green)"></div></div>
+      </div>
+      <div class="gc">
+        <div class="gc-rank">#6 Italia · PA &amp; Finance</div>
+        <div class="gc-name">Lazio</div>
+        <div class="gc-val">5% software IT<br>Roma hub PA digitale e finance</div>
+        <div class="gc-bar"><div class="gc-fill" style="width:14%;background:var(--rose)"></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Domanda B2B software per area lombarda — Quantum Data Prospect Map</div>
+        <div class="card-note">Stima proporzionata a densità PMI, PIL provinciale e profilo industriale. Fonte: Camera di Commercio Lombardia, ISTAT Struttura Imprese 2024.</div>
+      </div>
+      <div class="cw" style="height:300px"><canvas id="c9"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 5: TREND ══ -->
+  <div id="t-trend" class="tp">
+    <div class="sec-header">
+      <div class="sec-eyebrow">05 — Trend</div>
+      <h2 class="sec-title">Tecnologie in Forte Crescita — Dove Investono le Aziende</h2>
+      <p class="sec-desc">I Digital Enabler crescono al +10,2% medio annuo 2024–2028, contro +2,8% del mercato ICT tradizionale. Cloud, AI, cybersecurity e big data sono i driver principali. Fonte: Anitec-Assinform "Il Digitale in Italia 2025".</p>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">TCMA per tecnologia 2024–2028 — tasso di crescita annuo</div>
+        <div class="card-note">Fonte: Anitec-Assinform "Il Digitale in Italia 2025" / NetConsulting cube. I Digital Enabler crescono 3,6× più veloce del mercato ICT tradizionale.</div>
+      </div>
+      <div class="cw" style="height:310px"><canvas id="c10"></canvas></div>
+    </div>
+
+    <div class="g2">
+      <div class="card" style="margin-bottom:0">
+        <div class="card-head">
+          <div class="card-title">Mercato Cloud Italia — crescita accelerata 2020–2027</div>
+          <div class="card-note">+17,2% nel solo primo semestre 2024. Fonte: Anitec-Assinform 2024.</div>
+        </div>
+        <div class="cw" style="height:280px"><canvas id="c11"></canvas></div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="card-head">
+          <div class="card-title">Mercato AI in Italia — €674M (2023) → €1,8 Mld (2027)</div>
+          <div class="card-note">+34,8% nel 2024. Crescita media annua +40% stimata. Fonte: Anitec-Assinform "Ricerca e Innovazione ICT 2025".</div>
+        </div>
+        <div class="cw" style="height:280px"><canvas id="c12"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB 6: INSIGHT ══ -->
+  <div id="t-insight" class="tp">
+    <div class="sec-header">
+      <div class="sec-eyebrow">06 — Strategia</div>
+      <h2 class="sec-title">Insight Strategici per Quantum Data</h2>
+      <p class="sec-desc">Opportunità di posizionamento per una software house bresciana nel mercato B2B italiano. I dati indicano chiaramente i segmenti con maggiore potenziale, i driver d'acquisto e le barriere da superare per acquisire clienti PMI in Lombardia.</p>
+    </div>
+
+    <div class="ins-row">
+      <div class="ins bl"><div class="ins-beam"></div><div class="ins-n">71%</div><div class="ins-ttl">Aziende adottano tecnologie digitali</div><div class="ins-desc">Il 71% delle imprese italiane usa almeno una tecnologia digitale nel 2024. Mercato in forte espansione. (Anitec-Assinform 2025)</div></div>
+      <div class="ins am"><div class="ins-beam"></div><div class="ins-n">61%</div><div class="ins-ttl">PMI frenate dal costo ICT</div><div class="ins-desc">Il 61% delle PMI indica i costi come principale barriera all'innovazione. Opportunità: pricing flessibile e modulare. (Digital4.biz Survey)</div></div>
+      <div class="ins cy"><div class="ins-beam"></div><div class="ins-n">51/100</div><div class="ins-ttl">Maturità digitale PMI — record 2024</div><div class="ins-desc">L'indice di maturità PMI supera per la prima volta 50/100 (+3 punti vs 2023). Enorme potenziale di upgrading. (Politecnico Milano)</div></div>
+    </div>
+    <div class="ins-row">
+      <div class="ins vi"><div class="ins-beam"></div><div class="ins-n">83%</div><div class="ins-ttl">Software house italiane sono micro</div><div class="ins-desc">L'83% delle 26.000 software house italiane ha meno di 10 dipendenti. Mercato frammentato = opportunità per chi si specializza verticalmente. (Politecnico Milano)</div></div>
+      <div class="ins gr"><div class="ins-beam"></div><div class="ins-n">+9%</div><div class="ins-ttl">Servizi ICT in crescita 2024</div><div class="ins-desc">Sviluppo, consulenza, managed services: il segmento più dinamico. Cloud +17,2% nel solo H1 2024. (Anitec-Assinform)</div></div>
+      <div class="ins ro"><div class="ins-beam"></div><div class="ins-n">67%</div><div class="ins-ttl">PMI avanzate esportano oltre Italia</div><div class="ins-desc">Il 67% delle PMI con alta maturità digitale esporta fuori dall'Italia vs 34% delle PMI arretrate. Il software è un moltiplicatore. (Politecnico Milano)</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Driver decisionali nell'acquisto di software B2B — PMI italiane</div>
+        <div class="card-note">Fattori che influenzano la scelta del fornitore. Fonte: Digital4.biz PMI Survey + Osservatorio PMI Politecnico di Milano 2024.</div>
+      </div>
+      <div class="cw" style="height:300px"><canvas id="c13"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Barriere all'adozione digitale nelle PMI italiane</div>
+        <div class="card-note">Principali ostacoli dichiarati dalle PMI. Fonte: Osservatorio Software Politecnico di Milano / AssoSoftware 2024 + Digital4.biz Survey.</div>
+      </div>
+      <div class="cw" style="height:280px"><canvas id="c14"></canvas></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══════════════ JS ═══════════════ -->
+<script>
+/* tab system */
+function showTab(id, btn) {
+  document.querySelectorAll('.tp').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('active'));
+  document.getElementById('t-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* shared tooltip */
+const TT = {
+  backgroundColor: '#0C0E15',
+  titleColor: '#5B9CF6',
+  bodyColor: 'rgba(236,238,245,.75)',
+  borderColor: 'rgba(255,255,255,.08)',
+  borderWidth: 1, padding: 12,
+  cornerRadius: 8,
+  titleFont: { family: "'Inter',sans-serif", size: 12, weight: '600' },
+  bodyFont:  { family: "'Inter',sans-serif", size: 12 },
+};
+
+/* shared grid */
+const GR = { color: 'rgba(255,255,255,.04)' };
+const TX = { family: "'Inter',sans-serif", size: 11 };
+
+/* ── Servizi data ── */
+const SV = [
+  { n:'Software gestionale ERP/CRM',          u:'Digitalizzazione processi core',    pct:37.3, c:'#5B9CF6', t:'up', b:'top', tk:'€5K–200K' },
+  { n:'Cybersecurity & Data Protection',       u:'Protezione infrastrutture',         pct:12.5, c:'#F87171', t:'up', b:'hot', tk:'€8K–120K' },
+  { n:'Cloud & Infrastrutture digitali',       u:'Migrazione e hosting',              pct:11.2, c:'#22D4EF', t:'up', b:'hot', tk:'€3K–80K'  },
+  { n:'App mobile custom (iOS/Android)',       u:'Field force, clienti, servizi',     pct:8.8,  c:'#A78BFA', t:'up', b:'',    tk:'€15K–150K'},
+  { n:'Analytics, BI & Big Data',             u:'Decisioni data-driven',             pct:7.5,  c:'#F8B347', t:'up', b:'',    tk:'€10K–80K' },
+  { n:'E-commerce & piattaforme B2B',         u:'Vendita digitale',                  pct:6.8,  c:'#818CF8', t:'up', b:'',    tk:'€8K–60K'  },
+  { n:'Siti web custom & CMS',                u:'Presenza e brand digitale',         pct:5.5,  c:'#67E8F9', t:'flat', b:'',  tk:'€3K–25K'  },
+  { n:'Intelligenza Artificiale & ML',        u:'Automazione e previsione',          pct:3.6,  c:'#34D399', t:'up', b:'new', tk:'€20K–300K+'},
+  { n:'Integrazione sistemi / API',           u:'Legacy modernization',              pct:4.2,  c:'#FCA5A5', t:'up', b:'',    tk:'€5K–50K'  },
+  { n:'IoT & Industria 4.0',                  u:'Automazione industriale',           pct:2.6,  c:'#6EE7B7', t:'up', b:'new', tk:'€20K–200K+'},
+];
+
+/* C1 */
+new Chart(document.getElementById('c1'), {
+  type: 'bar',
+  data: {
+    labels: SV.map(s => s.n),
+    datasets: [{ label:'Quota %', data: SV.map(s => s.pct), backgroundColor: SV.map(s => s.c), borderRadius: 5, borderSkipped: false, barThickness: 18 }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` ${c.parsed.x}% della spesa B2B — ${SV[c.dataIndex].u}` } } },
+    scales: {
+      x: { grid: GR, ticks: { font: TX, callback: v => v + '%', color: '#5A6278' }, max: 42 },
+      y: { grid: { display: false }, ticks: { font: { ...TX, size: 12 }, color: '#9BA3B8' } }
+    }
+  }
+});
+
+/* TABLE */
+const tb = document.getElementById('ptb');
+SV.forEach((s, i) => {
+  const b = s.b === 'top' ? `<span class="badge btop">TOP</span>` : s.b === 'hot' ? `<span class="badge bhot">HOT</span>` : s.b === 'new' ? `<span class="badge bnew">NEW</span>` : '';
+  tb.innerHTML += `<tr>
+    <td><span class="rn">${String(i+1).padStart(2,'0')}</span></td>
+    <td><span class="pname">${s.n}</span>${b}</td>
+    <td style="font-size:11.5px;color:var(--t2)">${s.u}</td>
+    <td><div class="bt"><div class="bf" style="width:${(s.pct/37.3)*100}%;background:${s.c}"></div></div></td>
+    <td class="pv" style="color:${s.c}">${s.pct}%</td>
+    <td style="font-size:12px;color:var(--cyan);font-weight:600">${s.tk}</td>
+    <td class="${s.t==='up'?'trup':'trfl'}">${s.t==='up'?'▲ In crescita':'→ Stabile'}</td>
+  </tr>`;
+});
+
+/* C2 */
+new Chart(document.getElementById('c2'), {
+  type: 'doughnut',
+  data: {
+    labels: ['ERP/CRM (37,3%)','Cybersecurity (12,5%)','Cloud (11,2%)','App mobile (8,8%)','Analytics (7,5%)','E-commerce (6,8%)','Web (5,5%)','AI & IoT (6,2%)','Integrazioni (4,2%)'],
+    datasets: [{ data: [37.3,12.5,11.2,8.8,7.5,6.8,5.5,6.2,4.2], backgroundColor: ['#5B9CF6','#F87171','#22D4EF','#A78BFA','#F8B347','#818CF8','#67E8F9','#34D399','#FCA5A5'], borderColor: '#131720', borderWidth: 3 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '62%',
+    plugins: {
+      legend: { position: 'right', labels: { font: { ...TX, size: 11 }, color: '#9BA3B8', padding: 9, boxWidth: 10, usePointStyle: true } },
+      tooltip: { ...TT, callbacks: { label: c => ` ${c.parsed}%` } }
+    }
+  }
+});
+
+/* C3 */
+new Chart(document.getElementById('c3'), {
+  type: 'doughnut',
+  data: {
+    labels: ['SaaS / Cloud (52%)','Custom on-premise (24%)','On-premise standard (14%)','Ibrido (10%)'],
+    datasets: [{ data: [52,24,14,10], backgroundColor: ['#22D4EF','#5B9CF6','#5A6278','#A78BFA'], borderColor: '#131720', borderWidth: 3 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '62%',
+    plugins: {
+      legend: { position: 'right', labels: { font: TX, color: '#9BA3B8', padding: 9, boxWidth: 10, usePointStyle: true } },
+      tooltip: { ...TT, callbacks: { label: c => ` ${c.parsed}% acquisti software` } }
+    }
+  }
+});
+
+/* C4 */
+const SETT = ['Banche & Finance','Manifattura','Telecom & Media','PA Centrale+Locale','Distrib. & Servizi','Sanità','Assicurazioni','Energy & Utility'];
+new Chart(document.getElementById('c4'), {
+  type: 'bar',
+  data: {
+    labels: SETT,
+    datasets: [{ label:'M€', data: [10510,10468,9100,6200,3800,2300,2100,2363], backgroundColor: ['#5B9CF6','#F8B347','#A78BFA','#22D4EF','#818CF8','#34D399','#67E8F9','#F87171'], borderRadius: 5, borderSkipped: false }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` €${c.parsed.y.toLocaleString('it-IT')} milioni spesa ICT 2024` } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: TX, color: '#9BA3B8' } },
+      y: { grid: GR, ticks: { font: TX, callback: v => '€'+Math.round(v/1000)+'Mld', color: '#5A6278' } }
+    }
+  }
+});
+
+/* C5 */
+new Chart(document.getElementById('c5'), {
+  type: 'bar',
+  data: {
+    labels: ['Sanità','PA Centrale','Assicurazioni','PA Locale','Banche','Energy','Manifattura','Distrib.','Telecom'],
+    datasets: [{ label:'TCMA %', data: [9.6,8.8,7.1,7.0,7.4,6.0,6.1,5.2,-1.1], backgroundColor: [9.6,8.8,7.1,7.0,7.4,6.0,6.1,5.2,-1.1].map(v => v < 0 ? '#F87171' : v >= 8 ? '#22D4EF' : '#5B9CF6'), borderRadius: 5, borderSkipped: false, barThickness: 28 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` TCMA ${c.parsed.y}% annuo fino al 2027` } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: TX, color: '#9BA3B8' } },
+      y: { grid: GR, ticks: { font: TX, callback: v => v + '%', color: '#5A6278' } }
+    }
+  }
+});
+
+/* C6 */
+new Chart(document.getElementById('c6'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Grandi 250+ (62%)','Medie 50–249 (18%)','Piccole 10–49 (14%)','Micro 0–9 (6%)'],
+    datasets: [{ data: [62,18,14,6], backgroundColor: ['#F87171','#F8B347','#5B9CF6','#5A6278'], borderColor: '#131720', borderWidth: 3 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '62%',
+    plugins: {
+      legend: { position: 'right', labels: { font: TX, color: '#9BA3B8', padding: 8, boxWidth: 10, usePointStyle: true } },
+      tooltip: { ...TT, callbacks: { label: c => ` ${c.parsed}% della spesa digitale` } }
+    }
+  }
+});
+
+/* C7 */
+new Chart(document.getElementById('c7'), {
+  type: 'bar',
+  data: {
+    labels: ['Cybersecurity','Infrastrutture IT','Gestione ERP/CRM','Postazioni lavoro','Connettività','Sviluppo custom','Analytics & BI','Formazione'],
+    datasets: [{ label:'%', data: [61,56,49,48,43,35,28,22], backgroundColor: ['#F87171','#5B9CF6','#F8B347','#A78BFA','#22D4EF','#34D399','#818CF8','#67E8F9'], borderRadius: 5, borderSkipped: false, barThickness: 20 }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` ${c.parsed.x}% PMI considera prioritario` } } },
+    scales: {
+      x: { grid: GR, ticks: { font: TX, callback: v => v + '%', color: '#5A6278' }, max: 75 },
+      y: { grid: { display: false }, ticks: { font: { ...TX, size: 12 }, color: '#9BA3B8' } }
+    }
+  }
+});
+
+/* C8 */
+const REG = ['Lombardia','Piemonte','Emilia-R.','Veneto','Toscana','Lazio','Campania','Puglia','Altre'];
+new Chart(document.getElementById('c8'), {
+  type: 'bar',
+  data: {
+    labels: REG,
+    datasets: [{ label:'%', data: [37.1,11.1,9.3,8.9,7.4,5,4.5,4.4,12.3], backgroundColor: REG.map(r => r==='Lombardia'?'#5B9CF6':r==='Piemonte'||r==='Emilia-R.'?'#22D4EF':'#1F2333'), borderRadius: 5, borderSkipped: false }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` ${c.parsed.y}% del software italiano` } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: TX, color: '#9BA3B8' } },
+      y: { grid: GR, ticks: { font: TX, callback: v => v + '%', color: '#5A6278' } }
+    }
+  }
+});
+
+/* C9 */
+new Chart(document.getElementById('c9'), {
+  type: 'bar',
+  data: {
+    labels: ['Milano metro\n(MI+LO+MB)','Brescia','Bergamo','Monza B.','Varese','Como+Lecco','Altri'],
+    datasets: [{ label:'%', data: [55,14,12,7,6,4,2], backgroundColor: ['#5B9CF6','#F8B347','#22D4EF','#A78BFA','#34D399','#67E8F9','#1F2333'], borderRadius: 5, borderSkipped: false, barThickness: 36 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` ~${c.parsed.y}% domanda B2B software lombarda (stima)` } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: TX, color: '#9BA3B8' } },
+      y: { grid: GR, ticks: { font: TX, callback: v => v + '%', color: '#5A6278' }, max: 65 }
+    }
+  }
+});
+
+/* C10 */
+new Chart(document.getElementById('c10'), {
+  type: 'bar',
+  data: {
+    labels: ['AI & ML','Cloud Computing','Big Data','Cybersecurity','IoT & Ind.4.0','Piattaforme','Servizi ICT','Software ICT','Dispositivi'],
+    datasets: [{ label:'TCMA %', data: [38.7,17.2,15,11.9,12,10.5,7.4,3.9,1.6], backgroundColor: ['#34D399','#22D4EF','#A78BFA','#F87171','#F8B347','#818CF8','#67E8F9','#5B9CF6','#5A6278'], borderRadius: 5, borderSkipped: false, barThickness: 26 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` TCMA ${c.parsed.y}% annuo 2024–2028` } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: TX, color: '#9BA3B8' } },
+      y: { grid: GR, ticks: { font: TX, callback: v => v + '%', color: '#5A6278' } }
+    }
+  }
+});
+
+/* C11 */
+new Chart(document.getElementById('c11'), {
+  type: 'line',
+  data: {
+    labels: ['2020','2021','2022','2023','2024','2025e','2026e','2027e'],
+    datasets: [{
+      label: 'Indice Cloud', data: [100,120,145,175,215,255,295,340],
+      borderColor: '#22D4EF', backgroundColor: 'rgba(34,212,239,.06)',
+      tension: .4, fill: true, pointBackgroundColor: '#22D4EF', pointRadius: 4, pointHoverRadius: 7, borderWidth: 2.5
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` Indice: ${c.parsed.y} (base 100 = 2020)` } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: TX, color: '#9BA3B8' } },
+      y: { grid: GR, ticks: { font: TX, color: '#5A6278' }, min: 50 }
+    }
+  }
+});
+
+/* C12 */
+new Chart(document.getElementById('c12'), {
+  type: 'bar',
+  data: {
+    labels: ['2022','2023','2024','2025e','2026e','2027e'],
+    datasets: [{
+      label: 'M€', data: [434,674,909,1200,1500,1800],
+      backgroundColor: ['#1F2333','#1F2333','#34D399','#22D4EF','#5B9CF6','#A78BFA'],
+      borderRadius: 5, borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` €${c.parsed.y}M mercato AI in Italia` } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: TX, color: '#9BA3B8' } },
+      y: { grid: GR, ticks: { font: TX, callback: v => '€' + v + 'M', color: '#5A6278' } }
+    }
+  }
+});
+
+/* C13 */
+new Chart(document.getElementById('c13'), {
+  type: 'bar',
+  data: {
+    labels: ['Controllo processi aziendali (ROI)','Riduzione costi operativi','Integrazione sistemi esistenti','Velocità implementazione','Supporto post-vendita','Esperienza nel settore','Costo del progetto','Scalabilità soluzione'],
+    datasets: [{ label:'%', data: [82,81,76,72,68,65,61,58], backgroundColor: ['#22D4EF','#5B9CF6','#F8B347','#A78BFA','#34D399','#818CF8','#F87171','#67E8F9'], borderRadius: 5, borderSkipped: false, barThickness: 22 }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` ${c.parsed.x}% lo considera prioritario` } } },
+    scales: {
+      x: { grid: GR, ticks: { font: TX, callback: v => v + '%', color: '#5A6278' }, max: 100 },
+      y: { grid: { display: false }, ticks: { font: { ...TX, size: 12 }, color: '#9BA3B8' } }
+    }
+  }
+});
+
+/* C14 */
+new Chart(document.getElementById('c14'), {
+  type: 'bar',
+  data: {
+    labels: ['Costi troppo alti','Mancanza personale IT','Assenza incentivi / bandi','Integrazione legacy','Poca chiarezza ROI','Resistenza al cambiamento','Carenza competenze digitali'],
+    datasets: [{ label:'%', data: [61,50,46,38,32,28,24], backgroundColor: 'rgba(91,156,246,.7)', borderRadius: 5, borderSkipped: false, barThickness: 28, hoverBackgroundColor: '#5B9CF6' }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...TT, callbacks: { label: c => ` ${c.parsed.y}% delle PMI segnala questa barriera` } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: TX, color: '#9BA3B8' } },
+      y: { grid: GR, ticks: { font: TX, callback: v => v + '%', color: '#5A6278' }, max: 75 }
+    }
+  }
+});
+</script>
+</body>
+</html>
